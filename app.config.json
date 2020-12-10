@@ -1,0 +1,60 @@
+{
+  "appSettings": 
+  {
+    "serverPort":    3000,
+    "route":         "/",
+    
+    "authentication":
+    {
+    },
+
+    "stripe":
+    {
+      "key": "sk_test_XXXXXXXXXXXXXXXX"
+    },
+    
+    "email":
+    {
+      "driver": "ses",
+      "defaultSender": "support@XXXXXXX.com"
+    },
+    
+    "transcription":
+    {
+      "driver": "aws"
+    },
+    
+    "services": [ 
+      "SampleService"
+    ],
+
+    "database":
+    {
+      "DB_HOST": "XXXXXXXXX.us-east-1.rds.amazonaws.com",
+      "DB_USER": "XXXXXXXXXXX",
+      "DB_PASSWORD": "XXXXXXXXXXXXX",
+      "DB_TYPE": "pg",
+      "DB_NAME": "XXXXXXXXXX_DB"
+    },
+
+    "aws":
+    {
+      "credentials" :
+      {               
+        "accessKey": "XXXXXXXXXXXX",
+        "secretKey": "XXXXXXXXXXXX"      
+      },
+
+      "ses" : 
+      {
+        "region": "us-east-1",
+        "serviceUrl": "http://ses.us-east-1.amazonaws.com"
+      }
+    },
+
+    "logging" :
+    {
+      "level": "Info"
+    }
+  }
+}

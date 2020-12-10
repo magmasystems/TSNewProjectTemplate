@@ -1,0 +1,12 @@
+{
+  "compilerOptions":
+  {
+      "module": "commonjs",
+      "target": "es6",
+      "sourceMap": true,
+      "watch": false,
+      "outDir": "./dist",
+      "declaration": true,
+      "declarationDir": "./dist/typings"
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "extends": "airbnb-base",
+    "rules": 
+    {
+        "max-classes-per-file": 0,
+        "max-line-length": 0,
+        "member-ordering": 1,
+        "no-console":0,
+        "no-empty":  0,
+        "no-unused-expression": 0,
+        "one-line":  0,
+        "quotemark": 0,
+        "object-literal-sort-keys": 0
+    }
+}
