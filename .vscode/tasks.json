@@ -30,7 +30,7 @@
         {
             "label": "mocha",
             "type": "shell",
-            "command": "/usr/local/lib/node_modules/mocha/bin/mocha",
+            "command": "${workspaceRoot}/node_modules/mocha/bin/mocha",
             "args": [
                 "dist/test/*.test.js"
             ],

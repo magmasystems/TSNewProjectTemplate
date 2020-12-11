@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - npm install
+  pre_build:
+    commands:
+      - echo PreBuild phase starting ...
+  build:
+    commands:
+      - echo TypeScript build started on `date`
+      - ./node_modules/.bin/tsc
+      # - echo Creating the CI database
+      # - ./node_modules/.bin/knex --knexfile ./knex/knexfile.js --env ci migrate:latest
+      # - ./node_modules/.bin/knex --knexfile ./knex/knexfile.js --env ci seed:run
+    finally:
+  post_build:
+    commands:
+      - echo Build completed on `date`. Starting test
+      - ./node_modules/.bin/mocha --require ts-node/register --exit -env ci ./dist/test/*.test.js
+    finally:
+      # - lsof -PiTCP -sTCP:LISTEN | grep 3053 | awk '{print $2}' | xargs kill
+
+#artifacts:
+#  files:

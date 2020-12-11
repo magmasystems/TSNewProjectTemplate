@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - npm install
+  pre_build:
+    commands:
+      - echo PreBuild phase starting ...
+  build:
+    commands:
+      - echo TypeScript build started on `date`
+      - ./node_modules/.bin/tsc
+  post_build:
+    commands:
+      - echo Build completed on `date`. Starting test
+      - ./node_modules/.bin/mocha --require ts-node/register --exit -env local mock ./dist/test/*.test.js
