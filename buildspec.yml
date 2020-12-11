@@ -23,5 +23,6 @@ phases:
     finally:
       # - lsof -PiTCP -sTCP:LISTEN | grep 3053 | awk '{print $2}' | xargs kill
 
-#artifacts:
-#  files:
+artifacts:
+  files:
+    - '**/*'
