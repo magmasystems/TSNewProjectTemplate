@@ -26,6 +26,8 @@ phases:
 artifacts:
   files:
     - 'dist/**/*'
+    - 'scripts/**/*'
     - 'package.json'
+    - 'appspec.yml'
     - 'app.*.json'
     - '.npmrc'
