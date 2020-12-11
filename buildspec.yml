@@ -23,6 +23,10 @@ phases:
     finally:
       # - lsof -PiTCP -sTCP:LISTEN | grep 3053 | awk '{print $2}' | xargs kill
 
+cache:
+  paths:
+    - 'node_modules/**/*'
+
 artifacts:
   files:
     - 'dist/**/*'
