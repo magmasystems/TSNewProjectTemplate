@@ -1,9 +1,9 @@
-import * as services from '../index';
-import { IServiceCreationArgs } from './services/serviceCreationArgs';
+import * as services from '../../index';
+import { IServiceCreationArgs } from '../services/serviceCreationArgs';
 import { IAppApiManager } from './appApiManager';
 import { IAppServerSettings } from './appServerSettings';
-import { ReflectionHelpers } from './framework/reflectionHelpers';
-import { AppContext } from './appContext';
+import { ReflectionHelpers } from '../framework/reflectionHelpers';
+import { AppContext } from '../appContext';
 
 export class ServiceLoader
 {

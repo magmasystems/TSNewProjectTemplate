@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import * as fs from 'fs';
-import { AppContext } from './appContext';
+import { AppContext } from '../appContext';
 import { IAppServerSettings } from './appServerSettings';
 
 /**

@@ -3,14 +3,14 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as swagger from 'express-oas-generator';
 import { Router } from 'express';
-import { AppContext } from './appContext';
+import { AppContext } from '../appContext';
 import { ConfigurationManager } from './configurationManager';
 import { EventPublisher } from './eventPublisher';
-import { TSLogger } from './logging/tslogger';
+import { TSLogger } from '../logging/tslogger';
 import { IAppServerSettings } from './appServerSettings';
 import { ServiceBase } from './serviceBase';
 import { ServiceLoader } from './serviceLoader';
-import { IDisposable } from './framework/using';
+import { IDisposable } from '../framework/using';
 //#endregion
 
 export interface IAppApiManager

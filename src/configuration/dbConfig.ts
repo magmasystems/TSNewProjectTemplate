@@ -4,8 +4,8 @@ import * as mockKnex from 'mock-knex';
 import * as os from 'os';
 import { Model } from 'objection';
 import { AppContext } from '../appContext';
-import { ConfigurationManager } from '../configurationManager';
-import { IAppServerSettings } from '../appServerSettings';
+import { ConfigurationManager } from '../appServer/configurationManager';
+import { IAppServerSettings } from '../appServer/appServerSettings';
 
 export class DatabaseConfiguration
 {

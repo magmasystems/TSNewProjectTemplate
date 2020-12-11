@@ -1,6 +1,6 @@
 import express = require('express');
 import { nextTick } from 'process';
-import { ServiceBase } from '../serviceBase';
+import { ServiceBase } from '../appServer/serviceBase';
 import { IServiceCreationArgs } from './serviceCreationArgs';
 
 /**

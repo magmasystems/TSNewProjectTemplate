@@ -1,9 +1,9 @@
-import { AppContext } from './appContext';
-import { DatabaseConfiguration } from './configuration/dbConfig';
+import { AppContext } from '../appContext';
+import { DatabaseConfiguration } from '../configuration/dbConfig';
 import { EventPublisher } from './eventPublisher';
 import { AppApiManager } from './appApiManager';
 import { IAppServerSettings } from './appServerSettings';
-import { IDisposable } from './framework/using';
+import { IDisposable } from '../framework/using';
 
 export class AppServer implements IDisposable
 {

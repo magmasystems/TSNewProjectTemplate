@@ -1,5 +1,5 @@
 import { EventEmitter2 } from 'eventemitter2';
-import { AppContext } from './appContext';
+import { AppContext } from '../appContext';
 
 export class EventPublisher extends EventEmitter2
 {

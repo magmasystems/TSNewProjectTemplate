@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { AppContext } from '../appContext';
-import { ConfigurationManager } from '../configurationManager';
+import { ConfigurationManager } from '../appServer/configurationManager';
 import { Log4jsLoggerDriver } from './log4jsLoggerDriver';
 import { TypescriptLoggerDriver } from './typescriptLoggerDriver';
 

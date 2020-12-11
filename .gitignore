@@ -6,6 +6,7 @@ dist
 newman
 logs
 .env
+*.code-workspace
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

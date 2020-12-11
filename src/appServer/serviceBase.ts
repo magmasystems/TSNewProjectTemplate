@@ -1,11 +1,11 @@
 import express = require('express');
 import { ConfigurationManager } from './configurationManager';
 import { EventPublisher } from './eventPublisher';
-import { TSLogger } from './logging/tslogger';
-import { IServiceCreationArgs } from './services/serviceCreationArgs';
+import { TSLogger } from '../logging/tslogger';
+import { IServiceCreationArgs } from '../services/serviceCreationArgs';
 import { IAppApiManager } from './appApiManager';
 import { IAppServerSettings } from './appServerSettings';
-import { IDisposable } from './framework/using';
+import { IDisposable } from '../framework/using';
 // import { IUserEventService, UserEventService } from './services/userEventService';
 
 /**

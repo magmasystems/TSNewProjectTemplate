@@ -1,6 +1,6 @@
-import { IAppApiManager } from '../appApiManager';
+import { IAppApiManager } from '../appServer/appApiManager';
 import { AppContext } from '../appContext';
-import { IAppServerSettings } from '../appServerSettings';
+import { IAppServerSettings } from '../appServer/appServerSettings';
 
 export interface IServiceCreationArgs
 {

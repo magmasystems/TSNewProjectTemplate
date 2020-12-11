@@ -3,11 +3,11 @@ import * as swagger from 'express-oas-generator';
 import { Logger } from 'typescript-logging';
 import * as http from 'http';
 import * as WebSocket from 'ws';
-import { AppContext } from './src/appContext';
-import { EventPublisher } from './src/eventPublisher';
-import { TSLogger } from './src/logging/tslogger';
-import { AppServer } from './src/appServer';
-import { IDisposable, using } from './src/framework/using';
+import { AppContext } from './appContext';
+import { EventPublisher } from './appServer/eventPublisher';
+import { TSLogger } from './logging/tslogger';
+import { AppServer } from './appServer/appServer';
+import { IDisposable, using } from './framework/using';
 
 interface IWebSocketOnMessage { data: WebSocket.Data; type: string; target: WebSocket; }
 interface IWebSocketOnClose { wasClean: boolean; code: number; reason: string; target: WebSocket; }
