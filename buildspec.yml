@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - echo TypeScript build started on `date`
-      - ./node_modules/.bin/tsc
+      - ./node_modules/.bin/tsc  --project tsconfig.json
       # - echo Creating the CI database
       # - ./node_modules/.bin/knex --knexfile ./knex/knexfile.js --env ci migrate:latest
       # - ./node_modules/.bin/knex --knexfile ./knex/knexfile.js --env ci seed:run
