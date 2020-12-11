@@ -8,10 +8,47 @@
 
 ## Introduction
 
+This is an attempt to create the template of a NodeJS application that you can clone and use as the basis of any TypeScript/Node application. It support the definition and loading of "services".
+
+A "service" is a class that derived from `ServiceBase`. It has a name, a logger, an event publisher, and a global API Manager. The API Manager manages all interactions with the Express web server.
+
+## The APIManager
+
+As mentioned above, the shared APIManager manages all interactions with Express. It maintains a map of all services. At startup, it loads all of the services and calls their `createApi()` method in order to let each service define their routes.
+
+The APIManager contains an event publisher that is based on `EventEmitter2`. Your app can use this to send messages between the various services by calling the `emit()` method. The name of the event channel is {AppName}RestApi. Each service will have its own event publisher too, each with a different channel name.
+
+The APIManager sets up Swagger so that the APIs are documented. You can view the Swagger docs by going to <http://host:port/api-docs>.
+
+## Defining New Services
+
 In the `src` directory, there are two files that should be configured.
 
 1. The `AppContext.ts` file has app-specific properties - namely the `AppName` and `AppNameLower` properties. Change these two properties to the name of your app.
 2. The `app.ts` file is the actual main application.
+
+The constructor of the service should specify the name of the service.
+
+``` typescript
+    constructor(args: IServiceCreationArgs)
+    {
+        args.Name = 'SampleService';
+
+        super(args);
+
+        // more ....
+    }
+```
+
+Each service can override the `createApi()` method. This gives the service a change to register their own APIs and routes.
+
+``` typescript
+    public createApi(router: express.Router): void
+    {
+        super.createApi(router);
+
+        // Define your own routes here using router.route()
+```
 
 ## Loading Services at Runtime
 

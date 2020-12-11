@@ -17,7 +17,7 @@ export class AppServer implements IDisposable
     {
         return this.apiManager;
     }
-    public get MyProjectEvents(): EventPublisher
+    public get EventPublisher(): EventPublisher
     {
         return this.ApiManager.EventPublisher;
     }

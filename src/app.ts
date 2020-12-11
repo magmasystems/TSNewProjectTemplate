@@ -80,7 +80,7 @@ export class Program implements IDisposable
 
             // Subscribe to the internal 'event bus'
             // eslint-disable-next-line func-names
-            server.MyProjectEvents.on('**', function (values)
+            server.EventPublisher.on('**', function (values)
             {
                 Program.handleEvents(server, this, values);
             });

@@ -20,12 +20,13 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program with Mock",
-      "program": "${workspaceFolder}/dist/app",
+      "program": "${workspaceFolder}/dist/src/app",
       "args": [ "mock" ],
       "sourceMaps": true,
       "outFiles": [
         "${workspaceRoot}/dist/**/*.js", 
-        "${workspaceRoot}/dist/tests"]
+        "${workspaceRoot}/dist/tests"],
+      "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v12.16.1/bin/node"
     },
 
     {
