@@ -8,6 +8,7 @@ import { AppContext } from '../src/appContext';
 import { TSLogger } from '../src/logging/tslogger';
 import { AppServer } from '../src/appServer/appServer';
 import { UnitTestHelpers } from './helpers/unitTestHelpers';
+import { SampleServiceRestHelpers } from './helpers/sampleServiceRestHelpers';
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
@@ -83,11 +84,8 @@ describe('SampleService', () =>
 
         it('Should get a non-zero count', async () =>
         {
-            // Now fetch all users. It should return at least 1 user.
-            const response = await UnitTestHelpers.sendHttpGet(`http://localhost:${port}/sample/count`);
-            // eslint-disable-next-line no-unused-expressions
-            expect(response).to.be.not.null;
-            const { count } = JSON.parse(response);
+            // Now fetch the current count. It should return at least 1 user.
+            const count = await SampleServiceRestHelpers.count(port);
             expect(count).to.be.eq(1);
 
             server.dispose();
