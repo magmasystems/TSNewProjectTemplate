@@ -67,3 +67,24 @@ export * from './src/services/sampleService';
       "SampleService"
     ],
 ```
+
+## Architecture
+
+Each separate "environment" has the following class hierarchy.
+
+| Hierarchy        |           |            |                                          |
+|------------------|-----------|------------|------------------------------------------|
+| Environment      |           |            |                                          |
+|                  | AppServer |            |                                          |
+|                  |           | ApiManager |                                          |
+|                  |           |            | EventPublisher                           |
+|                  |           |            | Configuration _(appsettings.{env}.json)_ |
+|                  |           |            | Express web server                       |
+|                  |           |            | Logger                                   |
+|                  |           |            | Map of Services (name, ServiceBase)      |
+
+## Enhancements Needed
+
+1. Right now, the `appsettings.json` file defines the services as an array of string. In fact, each service should be a rich configuration object, including the port number and other properties. This way, we can have each service eventually run on its own port.
+
+2. The ApiManager has one single Express server. The web servers should be associated with each services, so that each services can run on its own port.

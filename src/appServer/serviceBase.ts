@@ -8,6 +8,14 @@ import { IAppServerSettings } from './appServerSettings';
 import { IDisposable } from '../framework/using';
 // import { IUserEventService, UserEventService } from './services/userEventService';
 
+export interface IServiceBase extends IDisposable
+{
+    Name: string;
+    ServiceType: string;
+    Config: any;
+    EventPublisher: EventPublisher;
+}
+
 /**
  * ServiceBase
  *
@@ -15,7 +23,7 @@ import { IDisposable } from '../framework/using';
  * @class ServiceBase
  * @implements {IDisposable}
  */
-export abstract class ServiceBase implements IDisposable
+export abstract class ServiceBase implements IServiceBase
 {
     //#region Variables
     private static instanceNumber: number = 0;

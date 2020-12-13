@@ -8,6 +8,7 @@ import { EventPublisher } from './appServer/eventPublisher';
 import { TSLogger } from './logging/tslogger';
 import { AppServer } from './appServer/appServer';
 import { IDisposable, using } from './framework/using';
+import { AppServerSettings } from './appServer/appServerSettings';
 
 interface IWebSocketOnMessage { data: WebSocket.Data; type: string; target: WebSocket; }
 interface IWebSocketOnClose { wasClean: boolean; code: number; reason: string; target: WebSocket; }
@@ -58,6 +59,7 @@ export class Program implements IDisposable
             process.exit(0);
         });
 
+        // Go through all of the environments (dev, prod, qa, etc)
         for (let i = 0;  i < this.Environments.length;  i++)
         {
             // Create the Rest API, and also, Rest API for some testing
@@ -67,7 +69,8 @@ export class Program implements IDisposable
             }
 
             // Create the app server
-            const server = new AppServer({ Environment: this.Environments[i] });
+            const settings = new AppServerSettings(this.Environments[i]);
+            const server = new AppServer(settings);
             this.Servers.push(server);
 
             // Only generate the Swagger docs on the first go-around.
@@ -148,6 +151,10 @@ export class Program implements IDisposable
                     this.Environments.push(args[++i]);
                     break;
 
+                case '-appname':
+                    Program.APPNAME = args[++i];
+                    break;
+
                 case '-postman':
                     this.PostmanCollectionName = args[++i];
                     break;
@@ -209,7 +216,7 @@ export class Program implements IDisposable
         const port = server.Configuration.appSettings.serverPort || 3050;
         AppContext.HttpServer = httpServer.listen(port, () =>
         {
-            Program.logger.info(`${Program.APPNAME} listening on port ${port}!`);
+            Program.logger.info(`${Program.APPNAME}/Environment [${server.Environment}] listening on port ${port}`);
         });
         this.initWebSocketWS(AppContext.HttpServer);
     }

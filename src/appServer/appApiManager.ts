@@ -23,6 +23,8 @@ export class AppApiManager implements IDisposable, IAppApiManager
     // Logging
     private Logger: TSLogger;
 
+    protected Environment: string;
+
     private config: any;
 
     public get Config(): any
@@ -62,9 +64,15 @@ export class AppApiManager implements IDisposable, IAppApiManager
     //#region Constructors
     constructor(settings?: IAppServerSettings)
     {
+        this.Environment = settings.Environment;
+        if (this.Environment.length === 0)
+        {
+            this.Environment = 'local';
+        }
+
         this.Config = new ConfigurationManager(settings).Configuration;
-        this.Logger = new TSLogger().createLogger(`${this.constructor.name}`, []);
-        AppApiManager.eventPublisher = new EventPublisher(`${AppContext.AppName}RestApi`);
+        this.Logger = new TSLogger().createLogger(`${AppContext.AppName}.${this.Environment}.${this.constructor.name}`, []);
+        AppApiManager.eventPublisher = new EventPublisher(`${AppContext.AppName}.${this.Environment}.RestApi`);
 
         // Create the Express Web Server
         this.express = express();
@@ -122,6 +130,7 @@ export class AppApiManager implements IDisposable, IAppApiManager
             });
 
             /* NOTYET
+               See if any AWS resources (queues, topics, etc) have changed
             service.ResourceInfoChanged = (client, newMap) =>
             {
                 this.Logger.info(`${client.Name}: The resource map has changed`);

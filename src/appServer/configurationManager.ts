@@ -49,5 +49,10 @@ export class ConfigurationManager
         // If there is no config file, then an exception will be thrown
         this.Configuration = JSON.parse(jsonConfig);
         AppContext.Configuration = this.Configuration;
+
+        if (this.Configuration.appSettings.applicationName)
+        {
+            AppContext.SetAppName(this.Configuration.appSettings.applicationName);
+        }
     }
 }

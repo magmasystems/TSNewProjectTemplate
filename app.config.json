@@ -1,59 +1,30 @@
 {
-  "appSettings": 
-  {
-    "serverPort":    3000,
-    "route":         "/",
-    
-    "authentication":
-    {
-    },
-
-    "stripe":
-    {
-      "key": "sk_test_XXXXXXXXXXXXXXXX"
-    },
-    
-    "email":
-    {
-      "driver": "ses",
-      "defaultSender": "support@XXXXXXX.com"
-    },
-    
-    "transcription":
-    {
-      "driver": "aws"
-    },
-    
-    "services": [ 
+  "appSettings": {
+    "applicationName": "TSSampleProject",
+    "serverPort": 3000,
+    "route": "/",
+    "authentication": {},
+    "services": [
       "SampleService"
     ],
-
-    "database":
-    {
+    "database": {
       "DB_HOST": "XXXXXXXXX.us-east-1.rds.amazonaws.com",
       "DB_USER": "XXXXXXXXXXX",
       "DB_PASSWORD": "XXXXXXXXXXXXX",
       "DB_TYPE": "pg",
       "DB_NAME": "XXXXXXXXXX_DB"
     },
-
-    "aws":
-    {
-      "credentials" :
-      {               
+    "aws": {
+      "credentials": {
         "accessKey": "XXXXXXXXXXXX",
-        "secretKey": "XXXXXXXXXXXX"      
+        "secretKey": "XXXXXXXXXXXX"
       },
-
-      "ses" : 
-      {
+      "ses": {
         "region": "us-east-1",
         "serviceUrl": "http://ses.us-east-1.amazonaws.com"
       }
     },
-
-    "logging" :
-    {
+    "logging": {
       "level": "Info"
     }
   }
