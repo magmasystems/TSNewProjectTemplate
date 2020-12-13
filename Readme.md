@@ -60,12 +60,22 @@ The app server tries to dynamically load in any services that derive from the `S
 export * from './src/services/sampleService';
 ```
 
-2. The `app.config.json` file contains a list of all service names. If you define additional services, add the new services to this file.
+2. The `app.config.json` file contains a list of all service names and optional properties. If you define additional services, add the new services to this file.
 
 ``` json
-    "services": [ 
-      "SampleService"
-    ],
+    "services": [{ 
+      "name": "SampleService",
+      "properties": {
+        "prop1": "foo",
+        "prop2": "baz",
+        "prop3": 
+        { 
+          "prop3.1": "Hello",
+          "prop3.2": "Sample",
+          "prop3.3": "Service"
+        }
+      }
+    }],
 ```
 
 ## Architecture
@@ -85,6 +95,4 @@ Each separate "environment" has the following class hierarchy.
 
 ## Enhancements Needed
 
-1. Right now, the `appsettings.json` file defines the services as an array of string. In fact, each service should be a rich configuration object, including the port number and other properties. This way, we can have each service eventually run on its own port.
-
-2. The ApiManager has one single Express server. The web servers should be associated with each services, so that each services can run on its own port.
+1. The ApiManager has one single Express server. The web servers should be associated with each services, so that each services can run on its own port.

@@ -13,11 +13,21 @@ import { ServiceLoader } from './serviceLoader';
 import { IDisposable } from '../framework/using';
 //#endregion
 
-export interface IAppApiManager
+export interface IAppApiManager extends IDisposable
 {
+    Config: any;
+    EventPublisher: EventPublisher;
+    Express: any;
+    ServiceMap: Map<string, ServiceBase>;
 }
 
-export class AppApiManager implements IDisposable, IAppApiManager
+export interface IServiceConfig
+{
+    name: String;
+    properties?: any;
+}
+
+export class AppApiManager implements IAppApiManager
 {
     //#region Variables
     // Logging
@@ -194,7 +204,7 @@ export class AppApiManager implements IDisposable, IAppApiManager
             this.Config = new ConfigurationManager(settings).Configuration;
         }
 
-        const listOfServices = this.Config.appSettings.services || ['SampleService'];
+        const listOfServices: IServiceConfig[] = this.Config.appSettings.services || [{ name: 'SampleService', properties: {} }];
         const services = ServiceLoader.LoadAllServices('ServiceBase', listOfServices, this, settings);
 
         // Add the various services to the map

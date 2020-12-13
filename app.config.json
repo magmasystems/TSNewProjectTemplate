@@ -4,9 +4,19 @@
     "serverPort": 3000,
     "route": "/",
     "authentication": {},
-    "services": [
-      "SampleService"
-    ],
+    "services": [{ 
+      "name": "SampleService",
+      "properties": {
+        "prop1": "foo",
+        "prop2": "baz",
+        "prop3": 
+        { 
+          "prop3.1": "Hello",
+          "prop3.2": "Sample",
+          "prop3.3": "Service"
+        }
+      }
+    }],
     "database": {
       "DB_HOST": "XXXXXXXXX.us-east-1.rds.amazonaws.com",
       "DB_USER": "XXXXXXXXXXX",

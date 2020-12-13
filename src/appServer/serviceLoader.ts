@@ -1,6 +1,6 @@
 import * as services from '../../index';
 import { IServiceCreationArgs } from '../services/serviceCreationArgs';
-import { IAppApiManager } from './appApiManager';
+import { IAppApiManager, IServiceConfig } from './appApiManager';
 import { IAppServerSettings } from './appServerSettings';
 import { ReflectionHelpers } from '../framework/reflectionHelpers';
 import { AppContext } from '../appContext';
@@ -8,7 +8,7 @@ import { AppContext } from '../appContext';
 export class ServiceLoader
 {
     // eslint-disable-next-line max-len
-    public static LoadAllServices(baseClassName: string, classNamesToLoad?: string[], apiManager?: IAppApiManager, settings?: IAppServerSettings): {}
+    public static LoadAllServices(baseClassName: string, classNamesToLoad?: IServiceConfig[], apiManager?: IAppApiManager, settings?: IAppServerSettings): {}
     {
         const dict = {};
         const subclasses = ReflectionHelpers.getSubclassesOf(baseClassName);
@@ -22,15 +22,20 @@ export class ServiceLoader
 
         if (classNamesToLoad)
         {
-            classNamesToLoad.map((name) =>
+            classNamesToLoad.map((serviceConfig) =>
             {
                 const args: IServiceCreationArgs = {
                     ServiceType: AppContext.AppName,
                     Name: '',
                     ApiManager: apiManager,
                     Settings: settings,
+                    ConfigProperties: serviceConfig.properties,
                 };
-                const service = new (services as any)[name](args);
+
+                // Declare serviceName as any to get rid of an error that says that a String cannot be used as an index type
+                const serviceName: any = serviceConfig.name;
+
+                const service = new (services as any)[serviceName](args);
                 dict[service.Name] = service;
                 return service;
             });

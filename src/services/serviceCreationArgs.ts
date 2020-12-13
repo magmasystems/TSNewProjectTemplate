@@ -8,6 +8,7 @@ export interface IServiceCreationArgs
     Name: string;
     ApiManager?: IAppApiManager;
     Settings?: IAppServerSettings;
+    ConfigProperties? : any;
 }
 
 export class ServiceCreationArgs implements IServiceCreationArgs
@@ -16,4 +17,5 @@ export class ServiceCreationArgs implements IServiceCreationArgs
     public Name: string;
     public ApiManager?: IAppApiManager;
     public Settings?: IAppServerSettings;
+    public ConfigProperties? : any;
 }
