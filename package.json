@@ -1,18 +1,18 @@
 {
-  "name": "myproject",
+  "name": "tsnewprojecttemplate",
   "version": "0.1.0",
-  "description": "Typescript version of server",
+  "description": "Framework for new Typescript apps",
   "main": "index.js",
   "typings": "./dist/typings",
   "scripts": {
-    "start": "node ./dist/app.js",
+    "start": "node ./dist/main.js",
     "dist": "sh ./scripts/dist.sh",
     "test": "mocha test/**/*.test.ts",
     "testwithmocks": "./scripts/runtests.sh mock",
     "lint": "./node_modules/.bin/eslint src/*.ts ./*.ts",
     "patch": "npm version patch",
     "publish": "npm publish",
-    "unpublish": "npm unpublish myproject --force",
+    "unpublish": "npm unpublish tsnewprojecttemplate --force",
     "knex-latest": "knex migrate:latest",
     "knex-rollback": "knex migrate:rollback",
     "knex-seed": "knex seed:run",
@@ -21,11 +21,11 @@
   "author": "Marc Adler <marc.adler@ctoasaservice.org>",
   "license": "ISC",
   "keywords": [
-    "MyProject"
+    "TSNewProjectTemplate"
   ],
   "repository": {
     "type": "git",
-    "url": "https://myproject.github.com/MyProject/_git/MyProject"
+    "url": "https://magmasystems.github.com/TSNewProjectTemplate/_git/TSNewProjectTemplate"
   },
   "publishConfig": {},
   "pre-commit": [

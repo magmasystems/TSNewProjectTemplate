@@ -1,8 +1,8 @@
 module.exports = {
   apps: [
     {
-      name: 'MyProject',
-      script: './dist/app.js',
+      name: 'TSNewProjectTemplate',
+      script: './dist/main.js',
       env: {
         COMMON_VARIABLE: 'true',
       },

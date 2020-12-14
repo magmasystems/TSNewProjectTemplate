@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
 import * as fs from 'fs';
+import * as path from 'path';
 import { AppContext } from '../appContext';
 import { IAppServerSettings } from './appServerSettings';
+import * as main from '../../main';
 
 /**
  * ConfigurationManager
@@ -22,7 +24,11 @@ export class ConfigurationManager
     constructor(settings?: IAppServerSettings, configFileName?: string)
     {
         const env: string = settings && settings.Environment ? settings.Environment : AppContext.Env;
-        configFileName = configFileName || './app.config.{env}json';
+
+        // Get the directory that main.js is being run from. Since this is usually /dist, go up two levels to find the appsettings file.
+        const mainDirectory = `${path.dirname(require.main.filename)}/..`;
+
+        configFileName = configFileName || `${mainDirectory}/app.config.{env}json`;
         configFileName = configFileName.replace('{env}', env ? `${env}.` : '');
 
         let jsonConfig;
@@ -42,7 +48,7 @@ export class ConfigurationManager
             catch
             {
                 // If the env-specific config file doesn't exist, try to read the general config file
-                jsonConfig = fs.readFileSync('./app.config.json', 'utf8');
+                jsonConfig = fs.readFileSync(`${mainDirectory}/app.config.json`, 'utf8');
             }
         }
 

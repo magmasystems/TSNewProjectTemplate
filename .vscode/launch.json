@@ -20,7 +20,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program with Mock",
-      "program": "${workspaceFolder}/dist/src/app",
+      "program": "${workspaceFolder}/dist/main",
       "args": [ 
         "mock", 
         "-env", "local", 

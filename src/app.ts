@@ -132,7 +132,7 @@ export class Program implements IDisposable
     private processCommandLine(args: string[]): void
     {
         // args[0] is 'node'
-        // args[1] is the name of the file tp execute (app.js)
+        // args[1] is the name of the file tp execute (main.js)
         // args[2] starts the command-line args
         for (let i = 2;  i < args.length;  i++)
         {
@@ -221,11 +221,3 @@ export class Program implements IDisposable
         this.initWebSocketWS(AppContext.HttpServer);
     }
 }
-
-using(new Program(process.argv), (program: Program) =>
-{
-    for (const server of program.Servers)
-    {
-        program.messageLoop(server);
-    }
-});
