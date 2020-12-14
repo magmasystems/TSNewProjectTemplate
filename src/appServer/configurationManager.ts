@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
+import { exception } from 'console';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AppContext } from '../appContext';
 import { IAppServerSettings } from './appServerSettings';
-import * as main from '../../main';
 
 /**
  * ConfigurationManager
@@ -25,12 +25,6 @@ export class ConfigurationManager
     {
         const env: string = settings && settings.Environment ? settings.Environment : AppContext.Env;
 
-        // Get the directory that main.js is being run from. Since this is usually /dist, go up two levels to find the appsettings file.
-        const mainDirectory = `${path.dirname(require.main.filename)}/..`;
-
-        configFileName = configFileName || `${mainDirectory}/app.config.{env}json`;
-        configFileName = configFileName.replace('{env}', env ? `${env}.` : '');
-
         let jsonConfig;
 
         if (settings && settings.Configuration)
@@ -40,16 +34,22 @@ export class ConfigurationManager
         }
         else
         {
-            try
+            configFileName = configFileName || 'app.config.{env}json';
+            configFileName = configFileName.replace('{env}', env ? `${env}.` : '');
+
+            // Try marching up the directory tree to find the proper appsettings file
+            let foundConfigFileName = this.probeDirectories(configFileName);
+            if (!foundConfigFileName)
             {
-                // Try to read the environment-specific config file first
-                jsonConfig = fs.readFileSync(configFileName, 'utf8');
+                foundConfigFileName = this.probeDirectories('app.config.json');
+                if (!foundConfigFileName)
+                {
+                    throw new Error('No configuration file found');
+                }
             }
-            catch
-            {
-                // If the env-specific config file doesn't exist, try to read the general config file
-                jsonConfig = fs.readFileSync(`${mainDirectory}/app.config.json`, 'utf8');
-            }
+
+            // Try to read the environment-specific config file first
+            jsonConfig = fs.readFileSync(foundConfigFileName, 'utf8');
         }
 
         // If there is no config file, then an exception will be thrown
@@ -60,5 +60,21 @@ export class ConfigurationManager
         {
             AppContext.SetAppName(this.Configuration.appSettings.applicationName);
         }
+    }
+
+    private probeDirectories(filename: string): string
+    {
+        let f = filename;
+        while (!fs.existsSync(f))
+        {
+            f = path.join('..', f);
+            const norm = path.resolve(f);
+            if (path.dirname(norm) === path.sep)
+            {
+                return null;
+            }
+        }
+
+        return f;
     }
 }
