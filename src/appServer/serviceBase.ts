@@ -4,9 +4,18 @@ import { EventPublisher } from './eventPublisher';
 import { TSLogger } from '../logging/tslogger';
 import { IServiceCreationArgs } from '../services/serviceCreationArgs';
 import { IAppApiManager } from './appApiManager';
-import { IAppServerSettings } from './appServerSettings';
 import { IDisposable } from '../framework/using';
 // import { IUserEventService, UserEventService } from './services/userEventService';
+
+/**
+ * This is what is in each service in the "services" section in the appSettings.json files.
+ * There is at least a service name and an optional list of properties.
+ */
+export interface IServiceConfiguration {
+    name: string;
+    properties?: any;
+    serviceType?: string;
+}
 
 export interface IServiceBase extends IDisposable
 {
@@ -14,6 +23,7 @@ export interface IServiceBase extends IDisposable
     ServiceType: string;
     Config: any;
     EventPublisher: EventPublisher;
+    ApiManager: IAppApiManager;
 }
 
 /**
@@ -23,7 +33,7 @@ export interface IServiceBase extends IDisposable
  * @class ServiceBase
  * @implements {IDisposable}
  */
-export abstract class ServiceBase implements IServiceBase
+export /* abstract */ class ServiceBase implements IServiceBase
 {
     //#region Variables
     private static instanceNumber: number = 0;
@@ -36,7 +46,15 @@ export abstract class ServiceBase implements IServiceBase
      * @type {string}
      * @memberof ServiceBase
      */
-    public Name: string;
+    public name: string;
+    public get Name(): string
+    {
+        return this.name;
+    }
+    public set Name(val: string)
+    {
+        this.name = val;
+    }
 
     /**
      * ServiceType
@@ -44,7 +62,15 @@ export abstract class ServiceBase implements IServiceBase
      * @type {string}
      * @memberof ServiceBase
      */
-    public ServiceType: string;
+    public serviceType: string;
+    public get ServiceType(): string
+    {
+        return this.serviceType;
+    }
+    public set ServiceType(val: string)
+    {
+        this.serviceType = val;
+    }
 
     /**
      * Config
@@ -52,7 +78,15 @@ export abstract class ServiceBase implements IServiceBase
      * @type {*}
      * @memberof ServiceBase
      */
-    public Config: any;
+    public config: any;
+    public get Config(): any
+    {
+        return this.config;
+    }
+    public set Config(val: any)
+    {
+        this.config = val;
+    }
 
     /**
      * Logger
@@ -61,7 +95,15 @@ export abstract class ServiceBase implements IServiceBase
      * @type {*}
      * @memberof ServiceBase
      */
-    protected Logger: any;
+    protected logger: any;
+    protected get Logger(): any
+    {
+        return this.logger;
+    }
+    protected set Logger(val: any)
+    {
+        this.logger = val;
+    }
 
     /**
      * EventPublisher
@@ -69,14 +111,22 @@ export abstract class ServiceBase implements IServiceBase
      * @type {EventPublisher}
      * @memberof ServiceBase
      */
-    public EventPublisher: EventPublisher;
+    public eventPublisher: EventPublisher;
+    public get EventPublisher(): EventPublisher
+    {
+        return this.eventPublisher;
+    }
+    public set EventPublisher(val: EventPublisher)
+    {
+        this.eventPublisher = val;
+    }
 
     private apiManager: IAppApiManager;
-    public get Manager(): IAppApiManager
+    public get ApiManager(): IAppApiManager
     {
         return this.apiManager;
     }
-    public set Manager(val: IAppApiManager)
+    public set ApiManager(val: IAppApiManager)
     {
         this.apiManager = val;
     }
@@ -89,7 +139,7 @@ export abstract class ServiceBase implements IServiceBase
 
         this.Name = args.Name;
         this.ServiceType = args.ServiceType;
-        this.Manager = args.ApiManager;
+        this.ApiManager = args.ApiManager;
 
         this.Config = new ConfigurationManager(args.Settings).Configuration;
         ServiceBase.GlobalConfig = this.Config;
@@ -123,7 +173,7 @@ export abstract class ServiceBase implements IServiceBase
     {
         router.route(`/${this.Name}`).get((req, resp) =>
         {
-            this.Logger.info(`Got a simple GET request for the service: Name ${req.params.queue}`);
+            this.Logger.info(`Got a simple GET request for the service: Name ${this.Name}`);
             resp.status(200).json({ serviceName: this.Name });
         });
     }

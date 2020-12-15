@@ -1,4 +1,4 @@
-import * as services from '../../index';
+import * as services from '../../services';
 import 'reflect-metadata';
 
 export class ReflectionHelpers

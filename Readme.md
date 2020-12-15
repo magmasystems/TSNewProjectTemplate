@@ -54,7 +54,7 @@ Each service can override the `createApi()` method. This gives the service a cha
 
 The app server tries to dynamically load in any services that derive from the `ServiceBase` class. Because TypeScript does not support reflection like C# does, we need to explicitly list the names of all service. There are two steps to adding a new service.
 
-1. In the root directory, the `index.ts` file contains the list of all of the services that should be loaded by the ServiceLoader. Add all of the additional services to this file.
+1. In the root directory, the `services.ts` file contains the list of all of the services that should be loaded by the ServiceLoader. Add all of the additional services to this file.
 
 ``` typescript
 export * from './src/services/sampleService';

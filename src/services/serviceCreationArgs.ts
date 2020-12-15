@@ -4,8 +4,8 @@ import { IAppServerSettings } from '../appServer/appServerSettings';
 
 export interface IServiceCreationArgs
 {
-    ServiceType: string;
     Name: string;
+    ServiceType?: string;
     ApiManager?: IAppApiManager;
     Settings?: IAppServerSettings;
     ConfigProperties? : any;
@@ -13,8 +13,8 @@ export interface IServiceCreationArgs
 
 export class ServiceCreationArgs implements IServiceCreationArgs
 {
-    public ServiceType: string = AppContext.AppName;
     public Name: string;
+    public ServiceType?: string = AppContext.AppName;
     public ApiManager?: IAppApiManager;
     public Settings?: IAppServerSettings;
     public ConfigProperties? : any;

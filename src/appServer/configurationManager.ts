@@ -3,6 +3,7 @@ import { exception } from 'console';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AppContext } from '../appContext';
+import { FileHelpers } from '../framework/fileHelpers';
 import { IAppServerSettings } from './appServerSettings';
 
 /**
@@ -38,10 +39,10 @@ export class ConfigurationManager
             configFileName = configFileName.replace('{env}', env ? `${env}.` : '');
 
             // Try marching up the directory tree to find the proper appsettings file
-            let foundConfigFileName = this.probeDirectories(configFileName);
+            let foundConfigFileName = FileHelpers.ProbeDirectories(configFileName);
             if (!foundConfigFileName)
             {
-                foundConfigFileName = this.probeDirectories('app.config.json');
+                foundConfigFileName = FileHelpers.ProbeDirectories('app.config.json');
                 if (!foundConfigFileName)
                 {
                     throw new Error('No configuration file found');
@@ -60,21 +61,5 @@ export class ConfigurationManager
         {
             AppContext.SetAppName(this.Configuration.appSettings.applicationName);
         }
-    }
-
-    private probeDirectories(filename: string): string
-    {
-        let f = filename;
-        while (!fs.existsSync(f))
-        {
-            f = path.join('..', f);
-            const norm = path.resolve(f);
-            if (path.dirname(norm) === path.sep)
-            {
-                return null;
-            }
-        }
-
-        return f;
     }
 }

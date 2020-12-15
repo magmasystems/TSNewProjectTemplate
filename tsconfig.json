@@ -8,5 +8,9 @@
       "outDir": "./dist",
       "declaration": true,
       "declarationDir": "./dist/typings"
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

@@ -8,7 +8,7 @@ import { ConfigurationManager } from './configurationManager';
 import { EventPublisher } from './eventPublisher';
 import { TSLogger } from '../logging/tslogger';
 import { IAppServerSettings } from './appServerSettings';
-import { ServiceBase } from './serviceBase';
+import { IServiceConfiguration, ServiceBase } from './serviceBase';
 import { ServiceLoader } from './serviceLoader';
 import { IDisposable } from '../framework/using';
 //#endregion
@@ -19,12 +19,6 @@ export interface IAppApiManager extends IDisposable
     EventPublisher: EventPublisher;
     Express: any;
     ServiceMap: Map<string, ServiceBase>;
-}
-
-export interface IServiceConfig
-{
-    name: String;
-    properties?: any;
 }
 
 export class AppApiManager implements IAppApiManager
@@ -126,7 +120,7 @@ export class AppApiManager implements IAppApiManager
         this.ServiceMap.forEach((service, _name, _map) =>
         {
             // Tell the service that the controlling API Manager is me.
-            service.Manager = this;
+            service.ApiManager = this;
 
             // eslint-disable-next-line func-names
             service.EventPublisher.on(`${EventPublisher.Prefix}**`, function (values: any[])
@@ -173,18 +167,21 @@ export class AppApiManager implements IAppApiManager
     {
         const welcomeMsg = `Welcome to ${AppContext.AppName}`;
 
-        // A simple call just to make sure that the server is up
-        this.router.route('/').get((_req, resp) =>
+        if (!this.Config.appSettings.ignoreDefaultApis)
         {
-            resp.json({ message: welcomeMsg });
-        });
-
-        if (AppContext.RestApiPrefix !== '/')
-        {
-            this.router.route(`${AppContext.RestApiPrefix}`).get((_req, resp) =>
+            // A simple call just to make sure that the server is up
+            this.router.route('/').get((_req, resp) =>
             {
                 resp.json({ message: welcomeMsg });
             });
+
+            if (AppContext.RestApiPrefix !== '/')
+            {
+                this.router.route(`${AppContext.RestApiPrefix}`).get((_req, resp) =>
+                {
+                    resp.json({ message: welcomeMsg });
+                });
+            }
         }
 
         // Create the APIs for each service
@@ -204,7 +201,7 @@ export class AppApiManager implements IAppApiManager
             this.Config = new ConfigurationManager(settings).Configuration;
         }
 
-        const listOfServices: IServiceConfig[] = this.Config.appSettings.services || [{ name: 'SampleService', properties: {} }];
+        const listOfServices: IServiceConfiguration[] = this.Config.appSettings.services || [{ name: 'SampleService', properties: {} }];
         const services = ServiceLoader.LoadAllServices('ServiceBase', listOfServices, this, settings);
 
         // Add the various services to the map
@@ -214,6 +211,23 @@ export class AppApiManager implements IAppApiManager
             const service: ServiceBase = services[serviceName] as ServiceBase;
             this.ServiceMap.set(service.Name, service);
         }
+    }
+
+    public AddService(service: ServiceBase): void
+    {
+        this.ServiceMap.set(service.Name, service);
+
+        // Tell the service that the controlling API Manager is me.
+        service.ApiManager = this;
+
+        // Create the APIs for the service
+        service.createApi(this.Express);
+
+        // eslint-disable-next-line func-names
+        service.EventPublisher.on(`${EventPublisher.Prefix}**`, function (values: any[])
+        {
+            AppApiManager.eventPublisher.emit(this.event, values[0]);
+        });
     }
 
     public getService<TService extends ServiceBase>(name: string): TService

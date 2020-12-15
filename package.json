@@ -2,8 +2,9 @@
   "name": "tsnewprojecttemplate",
   "version": "0.1.0",
   "description": "Framework for new Typescript apps",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "typings": "./dist/typings",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "start": "node ./dist/main.js",
     "dist": "sh ./scripts/dist.sh",

@@ -1,16 +1,21 @@
-import * as services from '../../index';
+import * as services from '../../services';
 import { IServiceCreationArgs } from '../services/serviceCreationArgs';
-import { IAppApiManager, IServiceConfig } from './appApiManager';
+import { IAppApiManager } from './appApiManager';
+import { IServiceConfiguration } from './serviceBase';
 import { IAppServerSettings } from './appServerSettings';
 import { ReflectionHelpers } from '../framework/reflectionHelpers';
 import { AppContext } from '../appContext';
+import { FileHelpers } from '../framework/fileHelpers';
+import { AppServer } from './appServer';
 
 export class ServiceLoader
 {
     // eslint-disable-next-line max-len
-    public static LoadAllServices(baseClassName: string, classNamesToLoad?: IServiceConfig[], apiManager?: IAppApiManager, settings?: IAppServerSettings): {}
+    public static LoadAllServices(baseClassName: string, servicesToLoad?: IServiceConfiguration[], apiManager?: IAppApiManager, settings?: IAppServerSettings): {}
     {
         const dict = {};
+
+        /*
         const subclasses = ReflectionHelpers.getSubclassesOf(baseClassName);
         subclasses.map((classService) =>
         {
@@ -19,10 +24,11 @@ export class ServiceLoader
             dict[service.Name] = service;
             return service;
         });
+        */
 
-        if (classNamesToLoad)
+        if (servicesToLoad)
         {
-            classNamesToLoad.map((serviceConfig) =>
+            servicesToLoad.map((serviceConfig) =>
             {
                 const args: IServiceCreationArgs = {
                     ServiceType: AppContext.AppName,
@@ -35,12 +41,57 @@ export class ServiceLoader
                 // Declare serviceName as any to get rid of an error that says that a String cannot be used as an index type
                 const serviceName: any = serviceConfig.name;
 
-                const service = new (services as any)[serviceName](args);
-                dict[service.Name] = service;
-                return service;
+                try
+                {
+                    const service = new (services as any)[serviceName](args);
+                    dict[service.Name] = service;
+                    return service;
+                }
+                catch (e)
+                {
+                    return null;
+                }
             });
         }
 
         return dict;
+    }
+
+    public static GetServiceConfig(server: AppServer, service: string): any
+    {
+        if (!server.Configuration.appSettings.services)
+        {
+            return null;
+        }
+
+        const servicesConfig: IServiceConfiguration[] = server.Configuration.appSettings.services;
+        for (const serviceConfig of servicesConfig)
+        {
+            if (serviceConfig.name && serviceConfig.name === service)
+            {
+                return serviceConfig;
+            }
+        }
+
+        return null;
+    }
+
+    public static LoadService(serviceConfig?: IServiceConfiguration, apiManager?: IAppApiManager, settings?: IAppServerSettings): any
+    {
+        const args: IServiceCreationArgs = {
+            ServiceType: serviceConfig.serviceType || AppContext.AppName,
+            Name: serviceConfig.name,
+            ApiManager: apiManager,
+            Settings: settings,
+            ConfigProperties: serviceConfig.properties,
+        };
+
+        // Declare serviceName as any to get rid of an error that says that a String cannot be used as an index type
+        const serviceName: any = serviceConfig.name;
+
+        const service = new (services as any)[serviceName](args);
+
+        service.createApi(apiManager.Express);
+        return service;
     }
 }
