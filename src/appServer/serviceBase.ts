@@ -24,6 +24,7 @@ export interface IServiceBase extends IDisposable
     Config: any;
     EventPublisher: EventPublisher;
     ApiManager: IAppApiManager;
+    Logger: any;
 }
 
 /**
@@ -95,12 +96,12 @@ export /* abstract */ class ServiceBase implements IServiceBase
      * @type {*}
      * @memberof ServiceBase
      */
-    protected logger: any;
-    protected get Logger(): any
+    public logger: any;
+    public get Logger(): any
     {
         return this.logger;
     }
-    protected set Logger(val: any)
+    public set Logger(val: any)
     {
         this.logger = val;
     }
