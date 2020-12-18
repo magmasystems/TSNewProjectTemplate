@@ -1,5 +1,4 @@
 import { AppContext } from '../appContext';
-import { DatabaseConfiguration } from '../configuration/dbConfig';
 import { EventPublisher } from './eventPublisher';
 import { AppApiManager } from './appApiManager';
 import { IAppServerSettings } from './appServerSettings';
@@ -52,7 +51,6 @@ export class AppServer implements IDisposable
     constructor(settings?: IAppServerSettings)
     {
         this.settings = settings;
-        DatabaseConfiguration.Initialize(settings);
         this.apiManager = new AppApiManager(settings);
         this.userName = this.Configuration.appSettings.authentication.username || 'UnknownUser';
     }
