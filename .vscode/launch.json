@@ -5,7 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program Local DB",
-      "program": "${workspaceFolder}/dist/app",
+      "program": "${workspaceFolder}/dist/main",
       "args": ["-env", "local", ],
       "sourceMaps": true,
       "outFiles": [
@@ -24,14 +24,14 @@
       "args": [ 
         "mock", 
         "-env", "local", 
-        "-appname", "TSSampleApp"
+        "-appname", "Mosaik"
       ],
       "sourceMaps": true,
       "outFiles": [
         "${workspaceRoot}/dist/**/*.js", 
         "${workspaceRoot}/dist/tests"
       ],
-      "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v12.16.1/bin/node"
+      "runtimeExecutable": "node"
     },
 
     {

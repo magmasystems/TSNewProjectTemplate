@@ -5,6 +5,7 @@ import { TSLogger } from '../logging/tslogger';
 import { IServiceCreationArgs } from '../services/serviceCreationArgs';
 import { IAppApiManager } from './appApiManager';
 import { IDisposable } from '../framework/using';
+import { HTTPStatusCode } from '../framework/httpStatusCode';
 // import { IUserEventService, UserEventService } from './services/userEventService';
 
 /**
@@ -175,7 +176,7 @@ export /* abstract */ class ServiceBase implements IServiceBase
         router.route(`/${this.Name}`).get((req, resp) =>
         {
             this.Logger.info(`Got a simple GET request for the service: Name ${this.Name}`);
-            resp.status(200).json({ serviceName: this.Name });
+            resp.status(HTTPStatusCode.OK).json({ serviceName: this.Name });
         });
     }
     //#endregion

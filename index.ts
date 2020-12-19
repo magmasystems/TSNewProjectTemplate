@@ -8,6 +8,7 @@ export * from './src/appServer/eventPublisher';
 export * from './src/appServer/serviceBase';
 export * from './src/appServer/serviceLoader';
 export * from './src/framework/fileHelpers';
+export * from './src/framework/httpStatusCode';
 export * from './src/framework/using';
 export * from './src/logging/tslogger';
 export * from './src/services/serviceCreationArgs';
