@@ -19,6 +19,9 @@ export interface IAppApiManager extends IDisposable
     EventPublisher: EventPublisher;
     Express: any;
     ServiceMap: Map<string, ServiceBase>;
+
+    GetService<TService extends ServiceBase>(name: string): TService;
+    AddService(service: ServiceBase): void
 }
 
 export class AppApiManager implements IAppApiManager
@@ -230,7 +233,7 @@ export class AppApiManager implements IAppApiManager
         });
     }
 
-    public getService<TService extends ServiceBase>(name: string): TService
+    public GetService<TService extends ServiceBase>(name: string): TService
     {
         if (!this.ServiceMap.has(name))
         {

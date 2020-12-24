@@ -24,10 +24,10 @@ describe('SampleService', () =>
     const server = new AppServer({ Environment: AppContext.Env });
     assert.notStrictEqual(server, null);
 
-    const badService = server.ApiManager.getService('NonexistentService');
+    const badService = server.ApiManager.GetService('NonexistentService');
     assert.strictEqual(badService, null);
 
-    const sampleService = server.ApiManager.getService('SampleService');
+    const sampleService = server.ApiManager.GetService('SampleService');
     assert.notStrictEqual(sampleService, null);
 
     let httpServer: http.Server;
