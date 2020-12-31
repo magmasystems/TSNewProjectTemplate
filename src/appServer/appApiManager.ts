@@ -19,6 +19,7 @@ export interface IAppApiManager extends IDisposable
     EventPublisher: EventPublisher;
     Express: any;
     ServiceMap: Map<string, ServiceBase>;
+    Logger: TSLogger;
 
     GetService<TService extends ServiceBase>(name: string): TService;
     AddService(service: ServiceBase): void
@@ -28,7 +29,7 @@ export class AppApiManager implements IAppApiManager
 {
     //#region Variables
     // Logging
-    private Logger: TSLogger;
+    public Logger: TSLogger;
 
     protected Environment: string;
 

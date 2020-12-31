@@ -49,6 +49,8 @@ export class ServiceLoader
                 }
                 catch (e)
                 {
+                    // eslint-disable-next-line no-console
+                    apiManager.Logger.warn(`ServiceLoader: cannot load service ${serviceName}: ${e.message}`);
                     return null;
                 }
             });

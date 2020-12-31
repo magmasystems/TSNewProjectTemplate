@@ -12,3 +12,4 @@ export * from './src/framework/httpStatusCode';
 export * from './src/framework/using';
 export * from './src/logging/tslogger';
 export * from './src/services/serviceCreationArgs';
+export * from './test/helpers/unitTestHelpers';
