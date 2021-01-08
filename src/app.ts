@@ -7,7 +7,7 @@ import { AppContext } from './appContext';
 import { EventPublisher } from './appServer/eventPublisher';
 import { TSLogger } from './logging/tslogger';
 import { AppServer } from './appServer/appServer';
-import { IDisposable, using } from './framework/using';
+import { IDisposable } from './framework/using';
 import { AppServerSettings } from './appServer/appServerSettings';
 
 interface IWebSocketOnMessage { data: WebSocket.Data; type: string; target: WebSocket; }

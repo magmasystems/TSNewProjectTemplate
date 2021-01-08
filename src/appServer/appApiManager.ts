@@ -55,9 +55,9 @@ export class AppApiManager implements IAppApiManager
     }
 
     // ExpressJS-related stuff
-    private express: any;
+    private readonly express: any;
 
-    private router: Router;
+    private readonly router: Router;
 
     public get Express(): any
     {

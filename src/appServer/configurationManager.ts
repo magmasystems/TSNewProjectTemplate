@@ -1,7 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { exception } from 'console';
 import * as fs from 'fs';
-import * as path from 'path';
 import { AppContext } from '../appContext';
 import { FileHelpers } from '../framework/fileHelpers';
 import { IAppServerSettings } from './appServerSettings';

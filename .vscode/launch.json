@@ -6,13 +6,13 @@
       "request": "launch",
       "name": "Launch Program Local DB",
       "program": "${workspaceFolder}/dist/main",
-      "args": ["-env", "local", ],
+      "args": ["-env", "local" ],
       "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/dist", 
-        "${workspaceRoot}/dist/src", 
+        "${workspaceRoot}/dist",
+        "${workspaceRoot}/dist/src",
         "${workspaceRoot}/dist/tests"],
-      "env": { 
+      "env": {
       }
     },
 
@@ -21,14 +21,14 @@
       "request": "launch",
       "name": "Launch Program with Mock",
       "program": "${workspaceFolder}/dist/main",
-      "args": [ 
-        "mock", 
-        "-env", "local", 
+      "args": [
+        "mock",
+        "-env", "local",
         "-appname", "Mosaik"
       ],
       "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/dist/**/*.js", 
+        "${workspaceRoot}/dist/**/*.js",
         "${workspaceRoot}/dist/tests"
       ],
       "runtimeExecutable": "node"
@@ -96,7 +96,7 @@
 			// Environment variables passed to the program.
 			"env": { "NODE_ENV": "local"}
     },
-    
+
     {
       "name": "Attach to Docker",
       "type": "node",

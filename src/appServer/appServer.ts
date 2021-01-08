@@ -7,9 +7,9 @@ import { IDisposable } from '../framework/using';
 export class AppServer implements IDisposable
 {
     //#region Variables
-    private apiManager: AppApiManager;
-    private settings?: IAppServerSettings;
-    private userName: string;
+    private readonly apiManager: AppApiManager;
+    private readonly settings?: IAppServerSettings;
+    private readonly userName: string;
 
     // Shortcuts for things that the ApiManager has
     public get ApiManager(): AppApiManager
